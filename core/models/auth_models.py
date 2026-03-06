@@ -33,6 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         (3, 'Buyer'),
     ], default=3, help_text="Admin(1), Seller(2), Buyer(3)", editable=False)
 
+    password = models.CharField(max_length=56)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
