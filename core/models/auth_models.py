@@ -21,6 +21,7 @@ class CustomUserManager(UserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     fullname = models.CharField(max_length=56)
     username = models.CharField(unique=True, max_length=56)
+    email = models.EmailField()
     age = models.SmallIntegerField(default=18)
     gender = models.BooleanField(choices=[
         (True, "Erkak"),
@@ -50,6 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             "id": self.id,
             "fullname": self.fullname,
             "username": self.username,
+            "email": self.email,
             "age": self.age,
             "gender": self.gender,
             "role": self.role,
@@ -66,5 +68,13 @@ class Firma(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={
         "role": 2
     })
+
+class VerifivationCode(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='verification_code')
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"code for - {self.user.username}"
 
 
