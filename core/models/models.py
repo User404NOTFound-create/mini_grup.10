@@ -60,7 +60,7 @@ class ProductComment(models.Model):
     def __str__(self):
         return f"{self.user} -> {self.product.name}"
 
-# --- ИЗБРАННОЕ И СРАВНЕНИЕ ---
+# --- ИЗБРАННОЕ
 class Wishlist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wishlists')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -68,6 +68,7 @@ class Wishlist(models.Model):
     class Meta:
         unique_together = ('user', 'product') # чтоб юзер не добавил один товар дважды
 
+# СРАВНЕНИЕ ---
 class Compare(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comparisons')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
